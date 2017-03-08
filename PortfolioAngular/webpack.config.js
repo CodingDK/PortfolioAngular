@@ -2,10 +2,17 @@ const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = (env) => {
     // Configuration in common to both client-side and server-side bundles
     const isDevBuild = !(env && env.prod);
+    const extractCSS = new ExtractTextPlugin({
+        filename: 'main-client.css',
+        disable: isDevBuild
+    });
     const sharedConfig = {
         stats: { modules: false },
         context: __dirname,
@@ -28,9 +35,33 @@ module.exports = (env) => {
     // Configuration for client-side bundle suitable for running in browsers
     const clientBundleOutputDir = './wwwroot/dist';
     const clientBundleConfig = merge(sharedConfig, {
-        entry: { 'main-client': './ClientApp/boot-client.ts' },
+        entry: {
+            'main-client': [
+                './ClientApp/boot-client.ts',
+                "./Styles/style.scss"
+            ]
+        },
+        module: {
+            rules: [{
+                test: /\.scss$/,
+                loader: extractCSS.extract({
+                    use: [{
+                        loader: "css-loader", options: {
+                            sourceMap: true
+                        }
+                    }, {
+                        loader: "sass-loader", options: {
+                            sourceMap: true
+                        }
+                    }],
+                    // use style-loader in development
+                    fallback: "style-loader"
+                })
+            }]
+        },
         output: { path: path.join(__dirname, clientBundleOutputDir) },
         plugins: [
+            extractCSS,
             new webpack.DllReferencePlugin({
                 context: __dirname,
                 manifest: require('./wwwroot/dist/vendor-manifest.json')
@@ -43,7 +74,10 @@ module.exports = (env) => {
             })
         ] : [
             // Plugins that apply in production builds only
-            new webpack.optimize.UglifyJsPlugin()
+            new webpack.optimize.UglifyJsPlugin(),
+            new OptimizeCssAssetsPlugin(
+                { cssProcessorOptions: { discardComments: { removeAll: true } } }
+            )
         ])
     });
 

@@ -1,0 +1,42 @@
+﻿// Load variables from bootstrap
+@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables";
+
+/*-----------------------------------
+	Variables
+-----------------------------------*/
+$brand-danger: $brand-danger; //from bootstrap
+$screen-sm: $screen-sm; //from bootstrap
+
+/*-----------------------------------
+	General Styles
+-----------------------------------*/
+
+body {
+  /*padding-top: 50px;*/
+  background-color: #f2f6f9;
+  /*color: black;*/
+}
+
+.rowEqualHeight {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.dangerColor {
+  color: $brand-danger;
+}
+
+.linkCursor {
+  cursor: pointer;
+}
+
+.preventUserSelect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

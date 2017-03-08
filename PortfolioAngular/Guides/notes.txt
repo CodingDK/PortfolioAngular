@@ -1,0 +1,23 @@
+﻿##########################
+
+node-sass needed to be installed global with command:
+
+npm install node-sass -g
+
+see https://damienbod.com/2016/10/14/using-sass-with-webpack-angular2-and-visual-studio/
+
+##########################
+
+webpack needed to be loaded first time or if changed in frameworks:
+
+webpack --config webpack.config.vendor.js
+
+see http://blog.stevensanderson.com/2016/10/04/angular2-template-for-visual-studio/
+
+##########################
+
+webpack for building vendor like production environment
+
+webpack --config webpack.config.vendor.js --env.prod
+
+##########################
