@@ -1,8 +1,11 @@
 ﻿/*-----------------------------------
 	Bootstrap
 -----------------------------------*/
-@import "bootstrap/variables.scss";
+@import "bootstrap/_variables-own.scss";
+@import "bootstrap/_variables.scss";
 @import "bootstrap/imports.scss";
+@import "bootstrap/_bootswatch.scss";
+
 
 /*-----------------------------------
 	Font-Awesome
