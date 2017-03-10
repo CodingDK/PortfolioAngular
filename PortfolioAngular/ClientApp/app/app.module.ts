@@ -3,6 +3,8 @@ import { RouterModule } from '@angular/router';
 import { UniversalModule } from 'angular2-universal';
 import { CollapseModule } from 'ng2-bootstrap/collapse';
 
+import { PortfolioComponent } from './components/portfolio/portfolio.component';
+
 import { AppComponent } from './components/app/app.component'
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
@@ -18,7 +20,8 @@ import { StyleViewComponent } from './components/styleview/styleview.component';
         CounterComponent,
         FetchDataComponent,
         HomeComponent,
-        StyleViewComponent
+        StyleViewComponent,
+        PortfolioComponent
     ],
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
@@ -28,6 +31,7 @@ import { StyleViewComponent } from './components/styleview/styleview.component';
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
             { path: 'style-view', component: StyleViewComponent },
+            { path: 'portfolio', component: PortfolioComponent },
             { path: '**', redirectTo: 'home' }
         ]),
         CollapseModule
