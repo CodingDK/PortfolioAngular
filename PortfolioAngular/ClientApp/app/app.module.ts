@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { UniversalModule } from 'angular2-universal';
+import { CollapseModule } from 'ng2-bootstrap/collapse';
+
 import { AppComponent } from './components/app/app.component'
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
@@ -27,7 +29,8 @@ import { StyleViewComponent } from './components/styleview/styleview.component';
             { path: 'fetch-data', component: FetchDataComponent },
             { path: 'style-view', component: StyleViewComponent },
             { path: '**', redirectTo: 'home' }
-        ])
+        ]),
+        CollapseModule
     ]
 })
 export class AppModule {
