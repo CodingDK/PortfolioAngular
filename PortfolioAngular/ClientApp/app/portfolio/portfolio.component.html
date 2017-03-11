@@ -8,11 +8,11 @@
 
 <div class="row" *ngFor="let row of rows">
   <div class="col-md-4 portfolio-item" *ngFor="let item of row.items">
-    <a href="#">
+    <a [routerLink]="['/portfolio', item.slug]">
       <img class="img-responsive" [src]="item.image" alt="">
     </a>
     <h3>
-      <a href="#">{{item.title}}</a>
+      <a [routerLink]="['/portfolio', item.slug]">{{item.title}}</a>
     </h3>
     <p>{{item.description}}</p>
   </div>
