@@ -7,9 +7,9 @@
 </div>
 
 <div class="row" *ngFor="let row of rows">
-  <div class="col-md-4 portfolio-item" *ngFor="let item of row.items">
+  <div class="col-md-4 portfolio-item" *ngFor="let item of row">
     <a [routerLink]="['/portfolio', item.slug]">
-      <img class="img-responsive" [src]="item.image" alt="">
+      <img class="img-responsive" [src]="item.images[item.imageIndex]" alt="">
     </a>
     <h3>
       <a [routerLink]="['/portfolio', item.slug]">{{item.title}}</a>
