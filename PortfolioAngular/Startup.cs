@@ -8,6 +8,11 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using PortfolioAngular.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
+//using MySQL.Data.EntityFrameworkCore.Extensions;
 
 namespace PortfolioAngular
 {
@@ -28,7 +33,22 @@ namespace PortfolioAngular
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var settings = Configuration.GetSection("AppSettings");
+            services.Configure<ApplicationSettings>(settings);
+                
+
+            var historyTableName = settings.GetValue<string>("TablePrefix") + HistoryRepository.DefaultTableName;
+            //"TablePrefix"
             // Add framework services.
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), 
+                x => x.MigrationsHistoryTable(historyTableName))
+            );
+
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>()
+            //    .AddDefaultTokenProviders();
+
             services.AddMvc();
         }
 
@@ -41,6 +61,7 @@ namespace PortfolioAngular
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                //app.UseDatabaseErrorPage();
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions {
                     HotModuleReplacement = true
                 });
@@ -51,6 +72,8 @@ namespace PortfolioAngular
             }
 
             app.UseStaticFiles();
+
+            //app.UseIdentity();
 
             app.UseMvc(routes =>
             {
