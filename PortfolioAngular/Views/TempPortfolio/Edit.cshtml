@@ -1,0 +1,94 @@
+@model PortfolioAngular.Models.PortfolioItem
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>PortfolioItem</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+        <div class="form-group">
+            <label asp-for="Slug" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Slug" class="form-control" />
+                <span asp-validation-for="Slug" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Title" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="SubTitle" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="SubTitle" class="form-control" />
+                <span asp-validation-for="SubTitle" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ImageIndex" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ImageIndex" class="form-control" />
+                <span asp-validation-for="ImageIndex" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Images" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                @*<textarea asp-for="Images" class="form-control" />*@
+                <textarea name="Images" class="form-control">@(Model != null ? String.Join(Environment.NewLine, Model.Images.Object) : "")</textarea>
+                @*<span asp-validation-for="Images" class="text-danger"></span>*@
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Tags" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                @*<input asp-for="Tags" class="form-control" />*@
+                <textarea name="Tags" class="form-control">@(Model != null ? String.Join(Environment.NewLine, Model.Tags.Object) : "")</textarea>
+                @*<span asp-validation-for="Tags" class="text-danger"></span>*@
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+  <!-- include summernote css/js-->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+<script>
+    $(document).ready(function () {
+      $('#Description').summernote({
+        height: 230, 
+        minHeight: 130
+      });
+    });
+</script>
+
+}

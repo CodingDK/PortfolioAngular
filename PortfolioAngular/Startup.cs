@@ -12,14 +12,16 @@ using PortfolioAngular.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System.Diagnostics;
+using PortfolioAngular.Extensions;
+using Microsoft.AspNetCore.Authorization;
 //using MySQL.Data.EntityFrameworkCore.Extensions;
 
 namespace PortfolioAngular
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
-        {
+        public Startup(IHostingEnvironment env) {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -50,6 +52,14 @@ namespace PortfolioAngular
             //    .AddDefaultTokenProviders();
 
             services.AddMvc();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("IsLocalhost",
+                                  policy => policy.Requirements.Add(new IsLocalhostRequirement()));
+            });
+
+            services.AddSingleton<IAuthorizationHandler, IsLocalhostHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,6 +95,8 @@ namespace PortfolioAngular
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
             });
+            var logger = loggerFactory.CreateLogger("Startup");
+            logger.LogWarning($"Application start in environment: {env.EnvironmentName} (from injected IHostingEnvironment)");
         }
     }
 }

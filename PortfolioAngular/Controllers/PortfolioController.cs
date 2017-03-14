@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioAngular.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace PortfolioAngular.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class PortfolioController : Controller
         {
         private readonly ApplicationDbContext _context;
@@ -16,13 +17,12 @@ namespace PortfolioAngular.Controllers
             _context = context;
         }
 
-        [HttpGet("[action]")]
-        public IEnumerable<PortfolioItem> GetItems()
+        [HttpGet()]
+        public async Task<List<PortfolioItem>> GetItems()
         {
-            return _context.PortfolioItems;
-            //return items;
+            return await _context.PortfolioItems.ToListAsync();
         }
-
+        
         public static PortfolioItem GenerateTempItem(int id) {
             var idStr = id.ToString();
             return new PortfolioItem() {
@@ -31,9 +31,9 @@ namespace PortfolioAngular.Controllers
                 SubTitle = "subTitle " + idStr,
                 Slug = "slug" + idStr,
                 ImageIndex = 0,
-                Images = new[] { "http://placehold.it/700x400", "http://placehold.it/700x400", "http://placehold.it/700x400", "http://placehold.it/700x400" },
+                Images = new [] { "http://placehold.it/700x400", "http://placehold.it/700x400", "http://placehold.it/700x400", "http://placehold.it/700x400" },
                 Description = "Fine Description " + idStr,
-                Tags = new[] { "ASP", "PHP", "C#" }
+                Tags = new [] { "ASP", "PHP", "C#" }
             };
         }
 
