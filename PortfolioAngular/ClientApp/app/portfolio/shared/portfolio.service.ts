@@ -8,6 +8,8 @@ import { PortfolioItem } from "../shared/portfolio-item.model";
 export class PortfolioService {
     private headers = new Headers({ 'Content-Type': 'application/json' });
     private portfolioUrl = 'api/portfolio/getItems';  // URL to web api
+    private portfolioImgUrlBase = '';
+
     private items: PortfolioItem[];
 
     constructor(private http: Http) {
@@ -18,15 +20,29 @@ export class PortfolioService {
 
         return this.http.get(this.portfolioUrl)
             .toPromise()
-            .then(response => this.items = response.json() as PortfolioItem[])
+            .then(response => {
+                var json = response.json();
+                this.portfolioImgUrlBase = json.baseImgUrl as string;
+                return this.items = json.items as PortfolioItem[];
+            })
             .catch(this.handleError);
     }
 
     getItem(slug: string): Promise<PortfolioItem> {
         return this.getItems().then(items => items.find(x => x.slug === slug));
     }
-    
 
+    getImgSrc(imgName: string): string {
+        if (!/^(f|ht)tps?:\/\//i.test(imgName)) {
+            return this.portfolioImgUrlBase + imgName;
+        }
+        return imgName;
+    }
+
+    getDefaultImgSrc(item: PortfolioItem): string {
+        return this.getImgSrc(item.images[item.imageIndex]);
+    }
+    
     private handleError(error: any): Promise<any> {
         console.error('portfolioService - An error occurred', error);
         return Promise.reject(error.message || error);

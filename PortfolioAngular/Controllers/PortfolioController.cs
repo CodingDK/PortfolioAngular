@@ -5,25 +5,32 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioAngular.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
-namespace PortfolioAngular.Controllers
-{
+namespace PortfolioAngular.Controllers {
     [Route("api/[controller]/[action]")]
-    public class PortfolioController : Controller
-        {
+    public class PortfolioController : Controller {
         private readonly ApplicationDbContext _context;
-                
-        public PortfolioController(ApplicationDbContext context) {
+        private readonly string baseImgUrl;
+
+        public PortfolioController(ApplicationDbContext context, IOptions<ApplicationSettings> appSettings)
+        {
             _context = context;
+            baseImgUrl = appSettings.Value.PortfolioImgBaseUrl;
         }
 
         [HttpGet()]
-        public async Task<List<PortfolioItem>> GetItems()
+        public async Task<object> GetItems()
         {
-            return await _context.PortfolioItems.ToListAsync();
+            var items = await _context.PortfolioItems.ToListAsync();
+            return new {
+                items,
+                baseImgUrl
+            };
         }
-        
-        public static PortfolioItem GenerateTempItem(int id) {
+
+        public static PortfolioItem GenerateTempItem(int id)
+        {
             var idStr = id.ToString();
             return new PortfolioItem() {
                 Id = id,
@@ -31,12 +38,12 @@ namespace PortfolioAngular.Controllers
                 SubTitle = "subTitle " + idStr,
                 Slug = "slug" + idStr,
                 ImageIndex = 0,
-                Images = new [] { "http://placehold.it/700x400", "http://placehold.it/700x400", "http://placehold.it/700x400", "http://placehold.it/700x400" },
+                Images = new[] { "http://placehold.it/700x400", "http://placehold.it/700x400", "http://placehold.it/700x400", "http://placehold.it/700x400" },
                 Description = "Fine Description " + idStr,
-                Tags = new [] { "ASP", "PHP", "C#" }
+                Tags = new[] { "ASP", "PHP", "C#" }
             };
         }
 
-        
+
     }
 }

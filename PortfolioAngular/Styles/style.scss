@@ -1,5 +1,6 @@
 ﻿// Load variables from bootstrap
-@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables";
+@import "./bootstrap/_variables-own.scss";
+@import "./bootstrap/_variables.scss";
 
 /*-----------------------------------
 	Variables
@@ -17,7 +18,49 @@ body {
 footer {
   margin: 50px 0;
 }
+@media (min-width:$screen-md-min) {
+  .rowEqualHeight {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
 
+/*-----------------------------------
+	Portfolio Styles
+-----------------------------------*/
 .portfolio-item {
   margin-bottom: 25px;
+
+  .btn {
+    width: 100%;
+    height: 100%;
+    white-space: normal;
+    text-align: left;
+
+    h3 {
+      color: $link-color;
+    }
+  }
 }
+.fa-ul {
+  margin-left: 1.6em;
+
+  & > li {
+    margin-bottom: 2px;
+  }
+}
+.fa-li {
+  top: 0.25em;
+}
+.btn-back {
+  color: $link-color;
+  &:hover, &:active {
+    color: $link-color;
+  }
+}
+.clickCursor{
+  cursor:pointer;
+}
+

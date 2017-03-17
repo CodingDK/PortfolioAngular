@@ -6,14 +6,12 @@
   </div>
 </div>
 
-<div class="row" *ngFor="let row of rows">
+<div class="row rowEqualHeight" *ngFor="let row of rows">
   <div class="col-md-4 portfolio-item" *ngFor="let item of row">
-    <a [routerLink]="['/portfolio', item.slug]">
-      <img class="img-responsive" [src]="item.images[item.imageIndex]" alt="">
+    <a class="btn btn-default" [routerLink]="['/portfolio', item.slug]" [@enterAnimation]="true">
+      <img class="img-responsive" [src]="getImgSrc(item)" alt="">
+      <h3>{{item.title}}</h3>
+      <p>{{item.subTitle}}</p>
     </a>
-    <h3>
-      <a [routerLink]="['/portfolio', item.slug]">{{item.title}}</a>
-    </h3>
-    <p>{{item.description}}</p>
   </div>
 </div>
