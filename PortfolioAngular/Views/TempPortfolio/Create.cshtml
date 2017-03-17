@@ -50,7 +50,11 @@
         <div class="form-group">
             <label asp-for="Description" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Description" class="form-control" />
+              <textarea class="form-control" style="visibility:hidden;height:0;width:0;"
+                        data-val="true" data-val-required="The Description field is required."
+                        id="Description" name="Description">@Html.Raw(Model.Description)</textarea>
+              @*<textarea asp-for="Description" class="form-control" style="visibility:hidden;height:0;width:0;"></textarea>*@
+              <div id="summernote"></div>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
         </div>
@@ -82,11 +86,15 @@
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
 <script>
-    $(document).ready(function () {
-      $('#Description').summernote({
-        height: 230,
-        minHeight: 130
-      });
+  $(document).ready(function () {
+    $('#summernote').summernote({
+      height: 230,
+      minHeight: 130
     });
+    $('#summernote').summernote('code', $("#Description").text());
+    $('form').submit(function () {
+      $('#Description').html($('#summernote').summernote('code'));
+    });
+  });
 </script>
 }
