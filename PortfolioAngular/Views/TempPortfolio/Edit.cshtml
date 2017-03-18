@@ -53,7 +53,7 @@
             <div class="col-md-10">
               <textarea class="form-control" style="visibility:hidden;height:0;width:0;" 
                         data-val="true" data-val-required="The Description field is required." 
-                        id="Description" name="Description">@Html.Raw(Model.Description)</textarea>
+                        id="Description" name="Description">@Html.Raw(Model?.Description)</textarea>
               @*<textarea asp-for="Description" class="form-control" style="visibility:hidden;height:0;width:0;"></textarea>*@
               <div id="summernote"></div>
                 <span asp-validation-for="Description" class="text-danger"></span>
