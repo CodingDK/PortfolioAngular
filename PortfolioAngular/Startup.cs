@@ -91,9 +91,9 @@ namespace PortfolioAngular
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
 
-                routes.MapSpaFallbackRoute(
-                    name: "spa-fallback",
-                    defaults: new { controller = "Home", action = "Index" });
+                //routes.MapSpaFallbackRoute(
+                //    name: "spa-fallback",
+                //    defaults: new { controller = "Home", action = "Index" });
             });
             var logger = loggerFactory.CreateLogger("Startup");
             logger.LogWarning($"Application start in environment: {env.EnvironmentName} (from injected IHostingEnvironment)");
