@@ -6,7 +6,7 @@ import { PortfolioService } from './shared/portfolio.service';
 @Component({
     selector: 'portfolio',
     templateUrl: './portfolio.component.html',
-    animations: [
+    /*animations: [
         trigger(
             'enterAnimation', [
                 transition(':enter', [
@@ -19,7 +19,7 @@ import { PortfolioService } from './shared/portfolio.service';
                 //])
             ]
         )
-    ]
+    ]*/
 })
 export class PortfolioComponent implements OnInit {
 

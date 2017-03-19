@@ -31,15 +31,16 @@ module.exports = (env) => {
         },
         plugins: [new CheckerPlugin()]
     };
-
+    
     // Configuration for client-side bundle suitable for running in browsers
     const clientBundleOutputDir = './wwwroot/dist';
     const clientBundleConfig = merge(sharedConfig, {
         entry: {
             'main-client': [
                 './ClientApp/boot-client.ts',
+            ].concat(isDevBuild ? [
                 "./Styles/style.scss"
-            ]
+            ] : [])
         },
         module: {
             rules: [{

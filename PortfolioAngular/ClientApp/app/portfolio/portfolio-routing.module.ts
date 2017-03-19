@@ -6,8 +6,8 @@ import { PortfolioDetailComponent } from './portfolio-detail/portfolio-detail.co
 
 @NgModule({
     imports: [RouterModule.forChild([
-        { path: 'portfolio', component: PortfolioComponent },
-        { path: 'portfolio/:slug', component: PortfolioDetailComponent },
+        { path: '', component: PortfolioComponent },
+        { path: ':slug', component: PortfolioDetailComponent },
     ])],
     exports: [RouterModule]
 })

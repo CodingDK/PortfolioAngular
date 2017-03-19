@@ -39,7 +39,9 @@ module.exports = (env) => {
                 'zone.js',
                 "ng2-bootstrap",
                 "./Styles/frameworks.scss"
-            ]
+            ].concat(!isDevBuild ? [
+                "./Styles/style.scss"
+            ] : [])
         },
         output: {
             publicPath: '/dist/',
