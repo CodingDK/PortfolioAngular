@@ -1,74 +1,83 @@
-<div class="row">
-  <div class="col-lg-12">
+<div class="row" *ngIf="showLoader">
+  <div class="col-lg-12 text-center">
     <h1 class="page-header">
-      <a class="btn btn-default btn-back" [routerLink]="['/']">
-        <i class="fa fa-2x fa-arrow-left" aria-hidden="true"></i>
-      </a> {{item.title}}
+      <i class="fa fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+      Henter indhold...
     </h1>
   </div>
 </div>
-
-<div class="row">
-  <div class="col-md-6">
-    <img class="img-responsive clickCursor" [src]="getImgSrc(item.imageIndex)" alt="" (click)="openGallery(item.imageIndex)">
-  </div>
-
-  <div class="col-md-6">
-    <h3 class="projectDescHeader">Projekt Beskrivelse</h3>
-    <p [innerHTML]="item.description"></p>
-    <h3>Projekt Teknologier</h3>
-    <ul class="fa-ul">
-      <li *ngFor="let tag of item.tags">
-        <i class="fa-li fa fa-check-square-o"></i>{{tag}}
-      </li>
-    </ul>
-  </div>
-</div>
-
-<div class="row" *ngIf="showMoreImages()">
-  <div class="col-lg-12">
-    <h3 class="page-header">Flere billeder</h3>
-  </div>
-  <ng-container *ngFor="let img of item.images; let i = index;">
-    <div class="col-sm-3 col-xs-6" *ngIf="item.imageIndex !== i">
-      <img class="img-responsive portfolio-item clickCursor" [src]="getImgSrc(i)" alt="" (click)="openGallery(i)">
+<ng-container *ngIf="!showLoader">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">
+        <a class="btn btn-default btn-back" [routerLink]="['/']">
+          <i class="fa fa-2x fa-arrow-left" aria-hidden="true"></i>
+        </a> {{item?.title}}
+      </h1>
     </div>
-  </ng-container>
-</div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <img class="img-responsive clickCursor" [src]="getImgSrc(item.imageIndex)" alt="" (click)="openGallery(item.imageIndex)" *ngIf="isImgNotNull(item.imageIndex)">
+    </div>
 
-<div class="portfolioGallery">
-  
-  <div class="modalGallery" [style.display]="isOpen ? 'block' : 'none'">
-    <span class="closeGallery cursor" (click)="closeGallery()">&times;</span>
-    <div class="modalGallery-content noselect">
-      <!--<a class="btn btn-default btn-back" style="position:absolute;top:100px;">
-        <i class="fa fa-2x fa-arrow-left" aria-hidden="true"></i>
-      </a>
-      <a class="btn btn-default btn-back" style="position:absolute;top:100px;right:0;">
-        <i class="fa fa-2x fa-arrow-right" aria-hidden="true"></i>
-      </a>-->
-      <div class="mySlidesGallery">
-        <img [src]="getImgSrc(currentIndex)" class="img-responsive">
+    <div class="col-md-6">
+      <h3 class="projectDescHeader">Projekt Beskrivelse</h3>
+      <p [innerHTML]="item.description"></p>
+      <h3>Projekt Teknologier</h3>
+      <ul class="fa-ul">
+        <li *ngFor="let tag of item.tags">
+          <i class="fa-li fa fa-check-square-o"></i>{{tag}}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="showMoreImages()">
+    <div class="col-lg-12">
+      <h3 class="page-header">Flere billeder</h3>
+    </div>
+    <ng-container *ngFor="let img of item.images; let i = index;">
+      <div class="col-sm-3 col-xs-6" *ngIf="item.imageIndex !== i">
+        <img class="img-responsive portfolio-item clickCursor" [src]="getImgSrc(i)" alt="" (click)="openGallery(i)">
       </div>
-      <!--
-      <a class="prevGallery hidden-xs" (click)="moveSlide(false)" *ngIf="currentIndex != 0">&#10094;</a>
-      <a class="nextGallery hidden-xs" (click)="moveSlide(true)" *ngIf="currentIndex != item?.images?.length-1">&#10095;</a>
-      -->
-      <h4 class="text-center noselect">
-        <a class="btn btn-default btn-back" (click)="moveSlide(false)" [style.visibility]="currentIndex != 0 ? 'visible' : 'hidden'">
+    </ng-container>
+  </div>
+
+  <div class="portfolioGallery" *ngIf="item.images != null">
+
+    <div class="modalGallery" [style.display]="isOpen ? 'block' : 'none'">
+      <span class="closeGallery cursor" (click)="closeGallery()">&times;</span>
+      <div class="modalGallery-content noselect">
+        <!--<a class="btn btn-default btn-back" style="position:absolute;top:100px;">
           <i class="fa fa-2x fa-arrow-left" aria-hidden="true"></i>
         </a>
-        <span class="imgNumber">{{currentIndex+1}} / {{item?.images?.length}}</span>
-        <a class="btn btn-default btn-back" (click)="moveSlide(true)" [style.visibility]="currentIndex != item?.images?.length-1 ? 'visible' : 'hidden'">
+        <a class="btn btn-default btn-back" style="position:absolute;top:100px;right:0;">
           <i class="fa fa-2x fa-arrow-right" aria-hidden="true"></i>
-        </a>
-      </h4>
-      
-      <div class="text-center">
-        <div class="columnGallery" *ngFor="let img of item.images; let i = index;">
-          <img class="demoGallery img-responsive" [class.active]="currentIndex === i" [src]="getImgSrc(i)" (click)="setCurrentIndex(i)" alt="">
+        </a>-->
+        <div class="mySlidesGallery">
+          <img [src]="getImgSrc(currentIndex)" class="img-responsive">
+        </div>
+        <!--
+        <a class="prevGallery hidden-xs" (click)="moveSlide(false)" *ngIf="currentIndex != 0">&#10094;</a>
+        <a class="nextGallery hidden-xs" (click)="moveSlide(true)" *ngIf="currentIndex != item?.images?.length-1">&#10095;</a>
+        -->
+        <h4 class="text-center noselect">
+          <a class="btn btn-default btn-back" (click)="moveSlide(false)" [style.visibility]="currentIndex != 0 ? 'visible' : 'hidden'">
+            <i class="fa fa-2x fa-arrow-left" aria-hidden="true"></i>
+          </a>
+          <span class="imgNumber">{{currentIndex+1}} / {{item?.images?.length}}</span>
+          <a class="btn btn-default btn-back" (click)="moveSlide(true)" [style.visibility]="currentIndex != item?.images?.length-1 ? 'visible' : 'hidden'">
+            <i class="fa fa-2x fa-arrow-right" aria-hidden="true"></i>
+          </a>
+        </h4>
+
+        <div class="text-center">
+          <div class="columnGallery" *ngFor="let img of item.images; let i = index;">
+            <img class="demoGallery img-responsive" [class.active]="currentIndex === i" [src]="getImgSrc(i)" (click)="setCurrentIndex(i)" alt="">
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</ng-container>

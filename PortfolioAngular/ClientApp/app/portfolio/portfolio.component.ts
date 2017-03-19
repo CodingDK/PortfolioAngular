@@ -1,4 +1,4 @@
-import { Component, OnInit, trigger, transition, animate, style } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; //trigger, transition, animate, style
 import { PortfolioItem } from './shared/portfolio-item.model';
 import { putItemsInRows } from '../shared/utils.functions';
 import { PortfolioService } from './shared/portfolio.service';
@@ -25,6 +25,8 @@ export class PortfolioComponent implements OnInit {
 
     public rows: PortfolioItem[][];
 
+    public showLoader: boolean = false;
+
     constructor(private service: PortfolioService) {
         
     }
@@ -34,7 +36,9 @@ export class PortfolioComponent implements OnInit {
     }
 
     private getRows(): void {
+        this.showLoader = true;
         this.service.getItems().then(items => {
+            this.showLoader = false;
             this.rows = putItemsInRows(items, 3);
         });
             //setTimeout(() => { this.rows = putItemsInRows(items, 3) }, 500) });

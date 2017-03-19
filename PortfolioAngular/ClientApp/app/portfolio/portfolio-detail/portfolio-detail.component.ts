@@ -13,14 +13,20 @@ export class PortfolioDetailComponent implements OnInit {
 
     public item: PortfolioItem = new PortfolioItem();
     //public defaultImg: string = "";
+    public showLoader: boolean = false;
 
     constructor(private route: ActivatedRoute, private router: Router, private service: PortfolioService) {
     }
 
     ngOnInit() {
+        this.showLoader = true;
         this.route.params
             .switchMap((params: Params) => this.service.getItem(params['slug']))
             .subscribe((item: PortfolioItem) => {
+                this.showLoader = false;
+                if (item == null) {
+                    this.router.navigate(['/']);
+                }
                 this.item = item;
             });
     }
@@ -33,6 +39,10 @@ export class PortfolioDetailComponent implements OnInit {
 
     showMoreImages(): boolean {
         return this.item != null && this.item.images != null && this.item.images.length > 1;
+    }
+
+    isImgNotNull(index: number): boolean {
+        return this.getImgSrc(index) != null;
     }
 
     //gallery stuff

@@ -37,7 +37,7 @@ module.exports = (env) => {
                 'event-source-polyfill',
                 //'jquery',
                 'zone.js',
-                "ng2-bootstrap",
+                //"ng2-bootstrap",
                 "./Styles/frameworks.scss"
             ].concat(!isDevBuild ? [
                 "./Styles/style.scss"
