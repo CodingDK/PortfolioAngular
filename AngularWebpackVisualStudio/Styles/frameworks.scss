@@ -1,0 +1,15 @@
+﻿/*-----------------------------------
+	Bootstrap
+-----------------------------------*/
+@import "bootstrap/_variables-own.scss";
+@import "bootstrap/_variables.scss";
+@import "bootstrap/imports.scss";
+@import "bootstrap/_bootswatch.scss";
+
+
+/*-----------------------------------
+	Font-Awesome
+-----------------------------------*/
+$fa-font-path: "../node_modules/font-awesome/fonts";
+
+@import "../node_modules/font-awesome/scss/font-awesome";

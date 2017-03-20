@@ -1,0 +1,33 @@
+<!--<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">
+      Portfolio
+    </h1>
+  </div>
+</div>-->
+<div class="row">
+  <div class="col-lg-12">
+    <p class="well page-header">
+      Velkommen, Mit navn er Lasse Dahl Slot.<br />
+      P&aring; denne side kan du se af mine tidligere skole- og fritidsprojekter, som jeg har v&aelig;ret med til at udvikle.<br />
+    </p>
+  </div>
+</div>
+<div class="row" *ngIf="showLoader">
+  <div class="col-lg-12 text-center">
+    <h1>
+      <i class="fa fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+      Henter indhold...
+    </h1>
+  </div>
+</div>
+
+<div class="row rowEqualHeight" *ngFor="let row of rows">
+  <div class="col-md-4 portfolio-item" *ngFor="let item of row">
+    <a class="btn btn-default" [routerLink]="['/portfolio', item.slug]"> <!--[@enterAnimation]="true"-->
+      <img class="img-responsive" [src]="getImgSrc(item)" alt="">
+      <h3>{{item.title}}</h3>
+      <p>{{item.subTitle}}</p>
+    </a>
+  </div>
+</div>

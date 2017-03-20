@@ -1,0 +1,35 @@
+﻿/*-----------------------------------
+	General
+-----------------------------------*/
+
+//fix fonts path
+$icon-font-path: "../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
+
+$brand-success: #62c462;
+$brand-info:    #3498DB;
+$brand-primary: #375a7f;
+/*-----------------------------------
+	Scaffolding
+-----------------------------------*/
+$link-color:        desaturate(lighten($brand-info, 10%),10%) !default;
+//** Link hover color set via `darken()` function.
+$link-hover-color:  $link-color !default;
+
+/*-----------------------------------
+	Navbar
+-----------------------------------*/
+$navbar-default-link-hover-color:   $brand-info;
+
+/*-----------------------------------
+	Navs
+-----------------------------------*/
+$nav-tabs-active-link-hover-color:  $brand-info;
+
+/*-----------------------------------
+	Pagination
+-----------------------------------*/
+$pagination-bg:         $brand-primary;
+
+$pagination-hover-bg:   lighten($brand-primary, 6%) !default;
+$pagination-active-bg:  $pagination-hover-bg;
+$pagination-disabled-bg: darken($brand-primary, 15%) !default;
