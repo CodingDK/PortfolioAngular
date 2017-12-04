@@ -62,6 +62,7 @@ namespace Angular2WebpackVisualStudio
             //services.AddIdentity<ApplicationUser, IdentityRole>()
             //    .AddEntityFrameworkStores<ApplicationDbContext>()
             //    .AddDefaultTokenProviders();
+            services.AddMemoryCache();
 
             services.AddMvc();
 

@@ -6,25 +6,47 @@ using Microsoft.AspNetCore.Mvc;
 using Angular2WebpackVisualStudio.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Angular2WebpackVisualStudio.Controllers {
     [Route("api/[controller]/[action]")]
     public class PortfolioController : Microsoft.AspNetCore.Mvc.Controller {
         private readonly ApplicationDbContext _context;
         private readonly string baseImgUrl;
+        private IMemoryCache _cache;
 
-        public PortfolioController(ApplicationDbContext context, IOptions<ApplicationSettings> appSettings)
+        public PortfolioController(IMemoryCache memoryCache, ApplicationDbContext context, IOptions<ApplicationSettings> appSettings)
         {
             _context = context;
+            _cache = memoryCache;
             baseImgUrl = appSettings.Value.PortfolioImgBaseUrl;
         }
 
         [HttpGet()]
         public async Task<object> GetItems()
         {
-            var items = await _context.PortfolioItems.ToListAsync();
+            List<PortfolioItem> cachedItems;
+            string cacheKey = "PfItems";
+            // Look for cache key.
+            
+            if (!_cache.TryGetValue(cacheKey, out cachedItems))
+            {
+                // Key not in cache, so get data.
+                cachedItems = await _context.PortfolioItems.ToListAsync();
+
+                // Set cache options.
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    // Keep in cache for this time, reset time if accessed.
+                    .SetSlidingExpiration(TimeSpan.FromDays(10));
+
+                // Save data in cache.
+                _cache.Set(cacheKey, cachedItems, cacheEntryOptions);
+            }
+
+
+            //var items = await _context.PortfolioItems.ToListAsync();
             return new {
-                items,
+                items = cachedItems,
                 baseImgUrl
             };
         }
